@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Hub.Shared/Hub.Shared.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/">
+    <Project Path="src/Services/Hub.Identity.API/Hub.Identity.API.csproj" />
+    <Project Path="src/Services/Hub.VehicleLog.API/Hub.VehicleLog.API.csproj" />
+  </Folder>
+</Solution>
