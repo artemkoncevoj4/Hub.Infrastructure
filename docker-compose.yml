@@ -79,15 +79,20 @@ services:
 
   identity-api:
     build:
-      context: ../Hub.Identity.API  # Docker выходит из инфраструктуры и идет в репозиторий сервиса
+      context: ../Hub.Identity.API 
       dockerfile: Dockerfile
     container_name: hub-identity-api
     restart: unless-stopped
-    ports:
-      - "5192:80"
+    expose:
+      - "80" # Порт доступен ТОЛЬКО для других контейнеров в hub_network
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=Identity_db;Username=hub_user;Password=hub_password
+      - ASPNETCORE_HTTP_PORTS=80
+      # JWT
+      - JWT_KEY=SuperSecretKey_DoNotShare_123456789_LongEnoughForSHA256
+      - JWT_ISSUER=FileVaultApi
+      - JWT_AUDIENCE=FileVaultFront
     depends_on:
       - postgres
     networks:
