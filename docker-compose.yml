@@ -1,3 +1,4 @@
+name: hub
 services:
   # Твой Postgres 18
   postgres:
@@ -78,18 +79,17 @@ services:
 
   identity-api:
     build:
-      context: ./src/Services/Hub.Identity.API  # путь к папке с Dockerfile
+      context: ../Hub.Identity.API  # Docker выходит из инфраструктуры и идет в репозиторий сервиса
+      dockerfile: Dockerfile
     container_name: hub-identity-api
     restart: unless-stopped
     ports:
-      - "5192:80"  # Пробрасываем порт наружу
+      - "5192:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=Identity_db;Username=hub_user;Password=hub_password
-      - JWT_KEY=ТвойСуперСекретныйКлючДляПродакшнаМинимум32Символа
     depends_on:
       - postgres
-      - kafka
     networks:
       - hub_network
       
