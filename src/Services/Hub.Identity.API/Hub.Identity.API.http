@@ -1,6 +1,0 @@
-@Hub.Identity.API_HostAddress = http://localhost:5192
-
-GET {{Hub.Identity.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
