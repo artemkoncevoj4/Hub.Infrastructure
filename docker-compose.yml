@@ -93,10 +93,39 @@ services:
       - JWT_KEY=SuperSecretKey_DoNotShare_123456789_LongEnoughForSHA256
       - JWT_ISSUER=FileVaultApi
       - JWT_AUDIENCE=FileVaultFront
+      - Kafka__BootstrapServers=kafka:9092
+      - Kafka__Topic=user-events
     depends_on:
       - postgres
     networks:
       - hub_network
+  
+  filevault-api:
+    build:
+      context: ../Hub.FileVault.API   # путь относительно текущего файла (Infrastructure)
+      dockerfile: Dockerfile
+    container_name: hub-filevault-api
+    restart: unless-stopped
+    expose:
+      - "80"                         # только внутренний доступ для nginx
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=80
+      # PostgreSQL
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=FileVault_db;Username=hub_user;Password=hub_password
+      # Kafka
+      - Kafka__BootstrapServers=kafka:9092   # если вынесете настройки в IConfiguration
+      - Kafka__Topic=user-events
+      # JWT (для FileVault тоже нужен, если он проверяет токены)
+      - JWT_KEY=SuperSecretKey_DoNotShare_123456789_LongEnoughForSHA256
+      - JWT_ISSUER=FileVaultApi
+      - JWT_AUDIENCE=FileVaultFront
+    depends_on:
+      - postgres
+      - kafka
+    networks:
+      - hub_network
+  
       
 networks:
   hub_network:
