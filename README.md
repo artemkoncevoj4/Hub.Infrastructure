@@ -22,18 +22,18 @@
 ## Структура файлов
 ```Plaintext
 Hub/
-├── Hub.Infrastructure/     # Твой ТЕКУЩИЙ репозиторий (бывшая папка Hub)
+├── Hub.Infrastructure/     
 │   ├── .git/
-│   ├── docker-compose.yml  # Собирает и запускает всё
+│   ├── docker-compose.yml  
 │   ├── nginx/
 │   │   └── nginx.conf
 │   └── init-scripts/
 │
-└── Hub.Client/ 
+└── Hub.Client/ # frontend
 │   ├── .git/
 │   └── ...
 │
-├── Hub.Identity.API/       # НОВЫЙ отдельный репозиторий №1
+├── Hub.Identity.API/       # НОВЫЙ отдельный микросервис
 │   ├── .git/
 │   ├── Controllers/ (AuthController.cs)
 │   ├── Database/
@@ -42,7 +42,7 @@ Hub/
 │   ├── Dockerfile
 │   └── appsettings.json
 │
-└── Hub.FileVault.API/     # НОВЫЙ отдельный репозиторий №2
+└── Hub.FileVault.API/     # НОВЫЙ отдельный микросервис
     ├── .git/
     └── ...
 
