@@ -126,6 +126,18 @@ services:
     networks:
       - hub_network
   
+  client:
+    build:
+      context: ../Hub.Client # Путь до папки с твоим Vue проектом
+      dockerfile: Dockerfile
+    container_name: hub-client
+    restart: unless-stopped
+    ports:
+      - "3000:80" # Клиент будет доступен в браузере по адресу http://localhost:3000
+    networks:
+      - hub_network
+    depends_on:
+      - nginx # Опционально: ждем, пока поднимется Gateway
       
 networks:
   hub_network:
