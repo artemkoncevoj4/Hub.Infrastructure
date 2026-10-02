@@ -1,6 +1,5 @@
 name: hub
 services:
-  # Твой Postgres 18
   postgres:
     image: postgres:18
     container_name: hub-postgres
@@ -17,7 +16,6 @@ services:
     networks:
       - hub_network
 
-  # Твой Redis 8.6
   redis:
     image: redis:8.6
     container_name: hub-redis
@@ -29,7 +27,6 @@ services:
     networks:
       - hub_network
 
-  # Твоя Apache Kafka 4.3.0 (с родными переменными окружения)
   kafka:
     image: apache/kafka:4.3.0
     container_name: hub-kafka
@@ -50,7 +47,7 @@ services:
     networks:
       - hub_network
 
-  # Графический интерфейс для Kafka (выровнен по левому краю)
+  # Графический интерфейс для Kafka
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: hub-kafka-ui
@@ -69,7 +66,7 @@ services:
     container_name: hub-nginx
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "3000:8080"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     extra_hosts:
@@ -132,8 +129,6 @@ services:
       dockerfile: Dockerfile
     container_name: hub-client
     restart: unless-stopped
-    ports:
-      - "3000:80" # Клиент будет доступен в браузере по адресу http://localhost:3000
     networks:
       - hub_network
     depends_on:
